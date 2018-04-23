@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<fstream>
 using namespace std;
 # define INF 0x3f3f3f3f
  
@@ -16,7 +17,7 @@ class Graph
     list< pair<int, int> > *adj;
  
 public:
-    Graph(int V);  // Constructor
+    Graph(std::ifstream &fin);  // Constructor
  
     // function to add an edge to graph
     void addEdge(int u, int v, int w);
@@ -26,12 +27,19 @@ public:
 };
  
 // Allocates memory for adjacency list
-Graph::Graph(int V)
+Graph::Graph(std::ifstream &fin)
 {
-    this->V = V;
+    int n, i, j, weight;
+    fin >> n;
+    this->V = n;
+    adj = new list<iPair> [V];
+    while (fin.peek() != '.')
+   {
+      fin >> i >> j >> weight;
+      addEdge(i,j,weight);
+   }
     adj = new list<iPair> [V];
 }
- 
 void Graph::addEdge(int u, int v, int w)
 {
     adj[u].push_back(make_pair(v, w));
